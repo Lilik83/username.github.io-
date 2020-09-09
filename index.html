@@ -1,68 +1,155 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Halaman pertamaku</title>
-</head>
-<body>
-<h1>Hosting Indonesia</h1>
-<img alt="Hosting Indonesia" src="hosting-indonesia.png" height="200" />
-<p>Kami menyediakan berbagai paket hosting dengan fitur lengkap</p>
-<h2>Pilihan Paket Hosting Indonesia:</h2>
-<ul>
-<li><a href="https://www.niagahoster.co.id" target="_blank">Paket Bayi</a></li>
-<li><a href="https://www.niagahoster.co.id" target="_blank">Paket Pelajar</a></li>
-<li><a href="https://www.niagahoster.co.id" target="_blank">Paket Personal</a></li>
-<li><a href="https://www.niagahoster.co.id" target="_blank">Paket Bisnis</a></li>
-</ul>
-<!-- Untuk tabel harga -->
-<table border="1">
-<tr>
-<td>Bayi</td>
-<td>Pelajar</td>
-<td>Personal</td>
-<td>Bisnis</td>
-</tr>
-<tr>
-<td>Rp 19.800/ bln</td>
-<td>Rp 44.800/ bln</td>
-<td>Rp 67.800/ bln</td>
-<td>Rp 91.800/ bln</td>
-</tr>
-<tr>
-<td>500 MB Disk Space</td>
-<td>Unlimited Disk Space</td>
-<td>Unlimited Disk Space</td>
-<td>Unlimited Disk Space</td>
-</tr>
-<tr>
-<td>1 Domain</td>
-<td>10 Addon Domains</td>
-<td>Unlimited Addon Domains</td>
-<td>Unlimited Addon Domains</td>
-</tr>
-</table>
-<br>
-<div>
-<h2>Hubungi Kami</h2>
-<form action=" index.html" method="get">
-<div>
-<input type="text" name="nama" placeholder="Nama Anda" required="" />
-</div><br>
-<div>
-<input type="text" name="email" placeholder="Masukkan Email Anda" required="" >
-</div><br>
-<div>
-<input type="text" name="subject" placeholder="Subjek" required="">
-</div><br>
-<div>
-<textarea type="text" name="pesan" rows="10" cols="30" placeholder="Pertanyaan"></textarea>
-</div><br>
-<div>
-<input type="submit" value="Kirim Sekarang" >
-</div>
-</form>
-</div>
-</body>
-</html>
+package pin_atm;
+import java.util.Scanner;
+public class program_atm {
 
+       public static void main(String[] args) {
+              // TODO Auto-generated method stub
+       Scanner ilham = new Scanner(System.in);
+       int pin, pilihan, saldo, proses, jum_transfer, no_rekening, penarikan;
+       saldo=1000000;
+       no_rekening=435147; 
+       jum_transfer= 0;
+       penarikan=0;
+
+       System.out.println("*************ATM************");
+       System.out.println("       SELAMAT DATANG       ");
+       System.out.println("         BANK ILHAM         ");
+       System.out.println("****************************");
+       System.out.println("SILAHKAN INPUTKAN PIN ANDA");
+       System.out.print("--> ");
+       pin=ilham.nextInt();
+
+       if (pin == 1234)
+       { 
+       do { 
+       System.out.println();
+       System.out.println("****************************");
+       System.out.println("MENU TRANSAKSI");
+       System.out.println("Ilham Sudrajat Ramadhon");
+       System.out.println();
+       System.out.println("SILAHKAN PILIH");
+       System.out.println("1. INFO SALDO");
+       System.out.println("2. TRANSFER");
+       System.out.println("3. PENARIKAN");
+       System.out.println("4. HISTORY TRANSAKSI");
+       System.out.println("5. KELUAR");
+       System.out.println("****************************");
+      
+       System.out.print("PILIHAN --> "); 
+       pilihan=ilham.nextInt();
+      
+       switch (pilihan) {
+       case 1: 
+              System.out.println("--------------------------------");
+              System.out.println("SALDO ANDA SAAT INI : "+saldo);
+              System.out.println("--------------------------------");
+              break;
+                
+       case 2:
+              System.out.println("--------------------------------");
+              System.out.println("TRANSFER DANA KE BANK LAIN ");
+              System.out.println("--------------------------------");
+        
+              System.out.print("Masukan Rekening Anda  : ");
+              no_rekening=ilham.nextInt();
+              System.out.print( "Masukan Jumlah Transfer      : ");
+              jum_transfer=ilham.nextInt();
+             
+              for ( int i=0; i<=1; i++ ){
+              System.out.print("PIN ANDA : ");
+              pin=ilham.nextInt();
+              }
+      
+              if (pin == 1234) {
+                     System.out.println(" -> PIN COCOK      = OK ");
+                     }
+              else {
+                     System.out.println(" -> PIN TIDAK COCOK. Trasaksi Gagal");
+                     }
+      
+              if (jum_transfer <= (saldo-50000)) {
+                     System.out.println(" -> SALDO          = OK");
+                     }
+      
+              else {
+                     System.out.println(" -> SALDO TIDAK CUKUP UNTUK TRANSFER. Trasaksi Gagal");
+                     }
+             
+              if (no_rekening == 435147) {
+                     System.out.println(" -> No Rekening      = "+no_rekening);
+                     System.out.println(" -> Nama             = Ilham Sudrajat Ramadhon");
+                     System.out.println(" -> Jumlah Transfer  = "+jum_transfer);
+                     }
+              else {
+                     System.out.println("No Rekening tidak terdaftar. Transaksi BATAL");
+                     }
+      
+              saldo=saldo-jum_transfer ;
+              break;
+
+       case 3:
+      
+              System.out.println("--------------------------------");
+              System.out.println("PENARIKAN UANG "); 
+              System.out.println("--------------------------------"); 
+              System.out.print("Masukan jumlah uang >> "); 
+              penarikan=ilham.nextInt(); 
+              System.out.println("Saldo Awal        : "+saldo); 
+              System.out.println("Penarikan         : "+penarikan); 
+              saldo=saldo-penarikan;  
+              System.out.println("Saldo akhir       : "+saldo); 
+
+              for (int i=0; i<=1; i++){ 
+              System.out.print("PIN ANDA   : ");  
+              pin=ilham.nextInt(); 
+              } 
+      
+              if (pin == 1234) { 
+                     System.out.println("-> PIN COCOK ");  
+                     } 
+              else { 
+                     System.out.println("-> PIN NOT COCOK. Trasaksi Batal");  
+                     } 
+      
+              if (penarikan <= (saldo-50000))
+                     {
+                     System.out.println("TRANSAKSI BERHASIL");
+                     }
+             
+              else {
+                     System.out.println("-> SALDO TIDAK CUKUP : TRANSAKSI GAGAL !");
+                     }
+             
+              break; 
+      
+       case 4:
+             
+              System.out.println("--------------------------------"); 
+              System.out.println("HISTORY TRANSAKSI"); 
+              System.out.println("--------------------------------"); 
+              System.out.println("Transksi Terakhir"); 
+              System.out.println("Penarikan Uang :"+ penarikan); 
+              System.out.println("Trasfer Uang   :"+ jum_transfer); 
+              System.out.println("Saldo Akhir    :"+ saldo); 
+              break;
+      
+       default:
+              }
+      
+       System.out.println();
+       System.out.println("TERIMA KASIH TELAH MENGGUNAKAN BANK ILHAM");
+       System.out.println("TEKAN 0 UNTUK KEMBALI KE MENU");
+       System.out.print ("->> ");
+       proses=ilham.nextInt();
+       ++proses;
+       }
+      
+       while(proses <= 1);
+       }
+      
+       else {
+       System.out.println("PIN SALAH! ATM ANDA DIBLOKIR.");
+       System.out.println("HUBUNGI KANTOR UNIT TERDEKAT atau CALL 085727131374");
+       } 
+       }
+       }
