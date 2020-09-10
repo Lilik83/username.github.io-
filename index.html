@@ -1,67 +1,151 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Halaman pertamaku</title>
-</head>
-<body>
-<h1>Rempah-Rempah Indonesia</h1>
-<img alt="Rempah Indonesia" src="Rempah-indonesia.png" height="200" />
-<p>Kami menyediakan berbagai paket Rempah-Rempah dengan fitur lengkap</p>
-<h2>Pilihan Paket Rempah Indonesia:</h2>
-<ul>
-<li><a href="https://www.niagahoster.co.id" target="_blank">Kapulaga</a></li>
-<li><a href="https://www.niagahoster.co.id" target="_blank">Cengkeh</a></li>
-<li><a href="https://www.niagahoster.co.id" target="_blank">Kopi</a></li>
-<li><a href="https://www.niagahoster.co.id" target="_blank">Coklat</a></li>
-</ul>
-<!-- Untuk tabel harga -->
-<table border="1">
-<tr>
-<td>Kapulaga</td>
-<td>Cengkeh</td>
-<td>Kopi</td>
-<td>Coklat</td>
-</tr>
-<tr>
-<td>Rp 100.000/ kg</td>
-<td>Rp 20.000/ kg</td>
-<td>Rp 10.000/ kg</td>
-<td>Rp 5.000/ kg</td>
-</tr>
-<tr>
-<td>500 MB Disk Space</td>
-<td>Unlimited Disk Space</td>
-<td>Unlimited Disk Space</td>
-<td>Unlimited Disk Space</td>
-</tr>
-<tr>
-<td>1 Domain</td>
-<td>10 Addon Domains</td>
-<td>Unlimited Addon Domains</td>
-<td>Unlimited Addon Domains</td>
-</tr>
-</table>
-<br>
-<div>
-<h2>Hubungi Kami</h2>
-<form action=" index.html" method="get">
-<div>
-<input type="text" name="nama" placeholder="Nama Anda" required="" />
-</div><br>
-<div>
-<input type="text" name="email" placeholder="Masukkan Email Anda" required="" >
-</div><br>
-<div>
-<input type="text" name="subject" placeholder="Subjek" required="">
-</div><br>
-<div>
-<textarea type="text" name="pesan" rows="10" cols="30" placeholder="Pertanyaan"></textarea>
-</div><br>
-<div>
-<input type="submit" value="Kirim Sekarang" >
-</div>
-</form>
-</div>
-</body>
-</html>
+#include <stdio.h>
+
+int main ()
+
+{
+
+    int pin;
+
+    int pilihan ;
+
+    char kode[15],konfirmasi[5];
+
+ int saldo= 500000;
+
+ printf("===================================\n");
+
+ printf("Selamat datang di ATM Bank Undiksha\n");
+
+ printf("      versi 1.0 by Manidae\n");
+
+ printf("===================================\n");
+
+ printf("Masukkan Pin Anda : ");
+
+ scanf("%d",&pin);
+
+ if(pin==1024){
+
+        awal:
+
+        printf("1. Cek Saldo\n");
+
+        printf("2. Tarik Tunai\n");
+
+        printf("3. Transfer\n");
+
+        printf("4. Cairkan Bonus\n");
+
+        printf("Masukkan Pilihan anda : ");
+
+        scanf("%d",&pilihan);
+
+        switch(pilihan){
+
+            case 1:
+
+                printf("Cek Saldo \n");
+
+                printf("Saldo anda adalah %d ",saldo);
+
+                break;
+
+            case 2:
+
+                printf("Tarik Tunai");
+
+                int uangTarik;
+
+                printf(" Masukkan jumlah uang yang ditarik : ");
+
+                scanf("%d",&uangTarik);
+
+                if(uangTarik>saldo){
+
+                    printf("Saldo anda tidak cukup");
+
+                }else{
+
+                     saldo=saldo-uangTarik;
+
+                     printf("Sisa Saldo anda adalah %d",saldo);
+
+                }
+
+                break;
+
+                case 3 : printf("Fasilitas transfer akan tersedia di versi 2.0");break;
+
+                case 4 :
+
+                    printf("Masukkan Kode :");
+
+                    scanf("%s", &kode);
+
+                    if(strcmp(kode, "yoyoayo") == 0){
+
+                        saldo=saldo+100000;
+
+                        printf("Bonus Berhasil ditambah, saldo anda sekarang : %d",saldo);
+
+                    }else if(strcmp(kode, "FTKJ4Y4") == 0){
+
+                        saldo=saldo+200000;
+
+                        printf("Bonus Berhasil ditambah, saldo anda sekarang : %d",saldo);
+
+                    }else if(strcmp(kode, "undikshaUnggul")==0)
+
+                    {
+
+                        saldo=saldo+300000;
+
+                        printf("Bonus Berhasil ditambah, saldo anda sekarang : %d",saldo);
+
+                    }else{
+
+                        printf("Kode Salah");
+
+                    }
+
+                break;
+
+                default : printf("Pilihan anda salah \n");
+
+        }
+
+         konfirmasi:
+
+         printf("\nApakah anda ingin bertransaksi kembali ? Y/T : ");
+
+         scanf("%s",&konfirmasi);
+
+         if(strcmp(konfirmasi, "Y") == 0 || strcmp(konfirmasi, "y") == 0){
+
+                goto awal;
+
+         }else if(strcmp(konfirmasi, "T") == 0 || strcmp(konfirmasi, "t") == 0){
+
+                printf("Terimakasih sudah bertransaksi bersama kami");
+
+                goto akhir;
+
+         }else{
+
+            printf("\nPilihan salah");
+
+            goto konfirmasi;
+
+         }
+
+    }else{
+
+        printf("PIN yang anda masukkan salah");
+
+    }
+
+    akhir:
+
+   return 0;
+
+}
