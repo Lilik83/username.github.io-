@@ -1,151 +1,389 @@
+@@ -0,0 +1,270 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int main ()
-
+void errorInput()
 {
+        system("clear");
+        printf("\n\n\n                   Maaf Pilihan Tidak Tersedia\n\n");
+}
 
-    int pin;
+int menu(),cekSaldo();
+void konfirmasi(),errorInput(),welcomeError(),welcome(),keluar(),inputRekening();
+void akun(char *user[], char *name[]);
+void verifikasi(int p, int *inputPin);
+void saldoATM(unsigned long long int *saldoAkun, unsigned long long int saldoSisa);
+void noRekening(unsigned long long int *noRek, unsigned long long int rekeningSaldo);
+void temp(unsigned long long int *tmp, unsigned long long int temp);
 
-    int pilihan ;
+char *akunATM, akun1[]="Excel Daris Fadhillah", akun2[]="M Daffa Geraldine";
+int pin, pin1 = 100200, pin2 = 111000;
+unsigned long long int saldo = 0, saldo1 = 250000, saldo2 = 500000;
+unsigned long long int rek = 0, rek1 = 2210171040, rek2 = 2210171045, tmp = 0;
 
-    char kode[15],konfirmasi[5];
 
- int saldo= 500000;
+void verifikasi(int p, int *inputPin)
+{
+        char **akunAktif;
+        if(p == pin1)
+        {
+                *inputPin = p;
 
- printf("===================================\n");
+                akunAktif = &akunATM;
+                *akunAktif = (char*) malloc(100 * sizeof(char));
+                strcpy(*akunAktif, akun1);
+                saldoATM(&saldo,saldo1);
+                noRekening(&rek, rek1);
+                menu();
+        }
 
- printf("Selamat datang di ATM Bank Undiksha\n");
+        else if(p == pin2)
+        {
+                *inputPin = p;
 
- printf("      versi 1.0 by Manidae\n");
+                akunAktif = &akunATM;
+                *akunAktif = (char*) malloc(100 * sizeof(char));
+                strcpy(*akunAktif, akun2);
+                saldoATM(&saldo,saldo2);
+                noRekening(&rek, rek2);
+                menu();
+        }
+        else
+        {
+                system("clear");
+                welcomeError();
+        }
+}
 
- printf("===================================\n");
+void keluar()
+{
+        if(pin == pin1)
+                saldoATM(&saldo1, saldo);
+        if(pin == pin2)
+                saldoATM(&saldo2, saldo);
 
- printf("Masukkan Pin Anda : ");
+        welcome();
+}
 
- scanf("%d",&pin);
+void saldoATM(unsigned long long int *saldoAkun, unsigned long long int saldoSisa)
+{
+        *saldoAkun = saldoSisa;
+}
 
- if(pin==1024){
+void noRekening(unsigned long long int *noRek, unsigned long long int rekeningSaldo)
+{
+        *noRek = rekeningSaldo;
+}
 
-        awal:
+void temp(unsigned long long int *tmp, unsigned long long int temp)
+{
+        *tmp = temp;
+}
 
-        printf("1. Cek Saldo\n");
 
-        printf("2. Tarik Tunai\n");
+int cekSaldo()
+{
+        int input;
+        system("clear");
+        printf("\n\n                              SISA SALDO ANDA\n\n");
+        printf("                                "); printf("Rp %llu",saldo);
+        printf("\n\n\n                APAKAH ANDA INGIN MELAKUKAN TRANSAKSI LAIN?\n\n");
+        printf("                          1. YA\n\n                          2. TIDAK\n\n");
+        printf("Pilihan : "); scanf("%d", &input);
+        switch (input) {
+        case 1:
+                menu(); break;
+        case 2:
+                keluar(); break;
+        default:
+                errorInput();
+                cekSaldo();
+        }
 
-        printf("3. Transfer\n");
+        return 0;
+}
 
-        printf("4. Cairkan Bonus\n");
-
-        printf("Masukkan Pilihan anda : ");
-
-        scanf("%d",&pilihan);
-
-        switch(pilihan){
-
-            case 1:
-
-                printf("Cek Saldo \n");
-
-                printf("Saldo anda adalah %d ",saldo);
-
-                break;
-
-            case 2:
-
-                printf("Tarik Tunai");
-
-                int uangTarik;
-
-                printf(" Masukkan jumlah uang yang ditarik : ");
-
-                scanf("%d",&uangTarik);
-
-                if(uangTarik>saldo){
-
-                    printf("Saldo anda tidak cukup");
-
-                }else{
-
-                     saldo=saldo-uangTarik;
-
-                     printf("Sisa Saldo anda adalah %d",saldo);
-
+int penarikan()
+{
+        system("clear");
+        unsigned long long int nominal;
+        int input;
+        printf("\n\n                   MASUKKAN NOMINAL KELIPATAN RP 50000\n\n");
+        printf("                           Rp "); scanf("%llu", &nominal);
+        printf("\n\n                  1. BENAR\n\n                  2.KELUAR\n\n                  3.KEMBALI KE MENU");
+        printf("\n\n\tPILIHAN : "); scanf("%d",&input);
+        switch (input) {
+        case 1:
+                if((nominal%50000 == 0) && saldo > nominal)
+                {
+                        saldo = saldo - nominal;
+                        cekSaldo();
+                        break;
                 }
+                else
+                {
 
+                        printf("\t\t                    MAAF");
+                        cekSaldo();
+
+                        break;
+                }
+        case 2:
+                keluar();
+
+        default:
+
+                menu();
                 break;
 
-                case 3 : printf("Fasilitas transfer akan tersedia di versi 2.0");break;
+        }
+        return 0;
+}
 
-                case 4 :
+void transfer()
+{
+        system("clear");
+        int input;
+        unsigned long long int nominal;
+        printf("\n\n                  MASUKKAN NOMINAL MINIMAL Rp 50.000\n\n");
+        printf("                             Rp "); scanf("%llu",&nominal);
+        printf("\n\n                  1. BENAR\n\n                  2.KELUAR\n\n                  3.KEMBALI KE MENU");
+        printf("\n\n\tPILIHAN : "); scanf("%d",&input);
+        switch (input) {
+        case 1:
+                if((nominal%50000 == 0) && saldo > nominal)
+                {
+                        temp(&tmp, nominal);
+                        inputRekening();
+                }
+                else
+                {
 
-                    printf("Masukkan Kode :");
+                        printf("\t\t                    MAAF");
+                        cekSaldo();
 
-                    scanf("%s", &kode);
+                        break;
+                }
+                break;
+        case 2:
+                keluar();
 
-                    if(strcmp(kode, "yoyoayo") == 0){
+        default:
 
-                        saldo=saldo+100000;
+                menu();
+                break;
+        }
+}
 
-                        printf("Bonus Berhasil ditambah, saldo anda sekarang : %d",saldo);
+void inputRekening()
+{
+        int input;
+        unsigned long long int rekening;
+        system("clear");
+        printf("\n\n                    MASUKKAN NOMOR REKENING\n\n");
+        printf("                         "); scanf("%llu",&rekening);
+        printf("\n\n                  1. BENAR\n\n                  2.KELUAR\n\n                  3.KEMBALI KE MENU");
+        printf("\n\n\tPILIHAN : "); scanf("%d",&input);
 
-                    }else if(strcmp(kode, "FTKJ4Y4") == 0){
+        //TODO
+        switch (input) {
+        case 1:
+                if(rekening != rek)
+                {
+                        if(rek == rek1)
+                                konfirmasi();
+                        else if(rek == rek2)
+                                konfirmasi();
+                        else transfer();
 
-                        saldo=saldo+200000;
 
-                        printf("Bonus Berhasil ditambah, saldo anda sekarang : %d",saldo);
+                        break;
+                }
+                else
+                {
 
-                    }else if(strcmp(kode, "undikshaUnggul")==0)
+                        printf("\t\t                    MAAF");
+                        cekSaldo();
 
-                    {
-
-                        saldo=saldo+300000;
-
-                        printf("Bonus Berhasil ditambah, saldo anda sekarang : %d",saldo);
-
-                    }else{
-
-                        printf("Kode Salah");
-
-                    }
-
+                        break;
+                }
+                break;
+        case 2:
+                keluar();
                 break;
 
-                default : printf("Pilihan anda salah \n");
+        default:
+
+                menu();
+                break;
 
         }
 
-         konfirmasi:
+}
 
-         printf("\nApakah anda ingin bertransaksi kembali ? Y/T : ");
+void konfirmasi()
+{
 
-         scanf("%s",&konfirmasi);
+        system("clear");
+        int input;
+        if(strcmp(akunATM, akun1) == 0)
+        {
+                printf("\n\n\t\tTUJUAN TRANSFER\n\n");
+                printf("\t\tNAMA      : %s\n\n",akun2);
+                printf("\t\tREKENING  : %llu\n\n", rek2);
+        }
+        if(strcmp(akunATM, akun2) == 0)
+        {
+                printf("\t\tTUJUAN TRANSFER\n\n");
+                printf("\t\tNAMA      : %s\n\n",akun1);
+                printf("\t\tREKENING  : %llu\n\n", rek1);
+        }
 
-         if(strcmp(konfirmasi, "Y") == 0 || strcmp(konfirmasi, "y") == 0){
+        printf("\n\n                  1. BENAR\n\n                  2.KELUAR\n\n                  3.KEMBALI KE MENU");
+        printf("\n\n\tPILIHAN : "); scanf("%d",&input);
+        switch (input) {
+        case 1:
+                if(strcmp(akunATM, akun1) == 0)
+                {
+                        saldo = saldo - tmp;
+                        saldo2 = saldo2 + tmp;
+                }
+                if(strcmp(akunATM, akun2) == 0)
+                {
+                        saldo = saldo - tmp;
+                        saldo1 = saldo1 + tmp;
+                }
+                break;
+        case 2:
+                keluar();
+                break;
 
-                goto awal;
+        default:
 
-         }else if(strcmp(konfirmasi, "T") == 0 || strcmp(konfirmasi, "t") == 0){
+                menu();
+                break;
+        }
+        printf("                          TRANSAKSI BERHASIL!");
+        cekSaldo();
 
-                printf("Terimakasih sudah bertransaksi bersama kami");
 
-                goto akhir;
+}
+ 116  menu.c 
+@@ -0,0 +1,116 @@
+#include "fungsi.h"
 
-         }else{
+int main()
+{
+        welcome();
+}
 
-            printf("\nPilihan salah");
+void welcome()
+{
+        int inputPin;
+        system("clear");
+        printf("                          SELAMAT DATANG\n");
+        printf("                                DI\n");
+        printf("                           BANK BERSAMA\n\n");
+        printf("                      SILAHKAN MASUKKAN PIN");
+        printf("\n\n\t\t\t      "); scanf("%d", &inputPin);
+        verifikasi(inputPin, &pin);
+}
 
-            goto konfirmasi;
+void welcomeError()
+{
+        int inputPin;
+        system("clear");
+        printf("                          SELAMAT DATANG\n");
+        printf("                                DI\n");
+        printf("                           BANK BERSAMA\n\n");
+        printf("                            PIN SALAH\n\n");
+        printf("                      SILAHKAN MASUKKAN PIN");
+        printf("\n\n\t\t\t      "); scanf("%d", &inputPin);
+        verifikasi(inputPin, &pin);
 
-         }
+}
 
-    }else{
+int menu()
+{
+        int input;
+        system("clear");
 
-        printf("PIN yang anda masukkan salah");
+        printf("                              MENU UTAMA\n");
+        printf("                        PECAHAN UANG RP 50.000\n");
+        printf("                    ===============================\n");
+        printf("                         TEKAN <0> UNTUK BATAL\n\n");
+        printf("  1- 100.000                                               5. 1.000.000\n\n\n");
+        printf("  2- 300.000                                               6. 500.000\n\n\n");
+        printf("  3- PENARIKAN JUMLAH LAIN                                 7. TRANSFER\n\n\n");
+        printf("  4- CEK SALDO");
 
-    }
-
-    akhir:
-
-   return 0;
-
+        printf("\n\nPILIHAN : "); scanf("%d", &input);
+        switch(input)
+        {
+        case 1:
+                if(saldo > 100000)
+                {
+                        saldo = saldo - 100000;
+                        cekSaldo();
+                }
+                else
+                {
+                        printf("\t\t                    MAAF");
+                        cekSaldo();
+                }
+                break;
+        case 2:
+                if(saldo > 300000)
+                {
+                        saldo = saldo - 300000;
+                        cekSaldo();
+                }
+                else
+                {
+                        printf("\t\t                    MAAF");
+                        cekSaldo();
+                }
+                break;
+        case 3:
+                penarikan();
+                break;
+        case 4:
+                cekSaldo();
+                break;
+        case 5:
+                if(saldo > 1000000)
+                {
+                        saldo = saldo - 1000000;
+                        cekSaldo();
+                }
+                else
+                {
+                        printf("\t\t                    MAAF");
+                        cekSaldo();
+                }
+                break;
+        case 6:
+                if(saldo > 500000)
+                {
+                        saldo = saldo - 500000;
+                        cekSaldo();
+                }
+                else
+                {
+                        printf("\t\t                    MAAF");
+                        cekSaldo();
+                }
+                break;
+        case 7:
+                transfer();
+                break;
+        case 0:
+                keluar();
+                break;
+        default:
+                errorInput();
+                menu();
+        }
+        return 0;
 }
