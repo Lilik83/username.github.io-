@@ -1,43 +1,89 @@
-void konfirmasi()
-{
-        system("clear");
-        int input;
-        if(tmp2 == rek1)
-        {
-          printf("\t\t      TUJUAN TRANSFER\n\n");
-          printf("\t\tNAMA      : %s\n\n",akun1);
-          printf("\t\tREKENING  : %llu\n\n", rek1);
-          printf("\t\tNOMINAL   : Rp %llu\n\n", tmp);
-        }
-        if(tmp2 == rek2)
-        {
-                printf("\n\n\t\t      TUJUAN TRANSFER\n\n");
-                printf("\t\tNAMA      : %s\n\n",akun2);
-                printf("\t\tREKENING  : %llu\n\n", rek2);
-                printf("\t\tNOMINAL   : Rp %llu\n\n", tmp);
-        }
-printf("\n\n                  1. BENAR\n\n                  2.KELUAR\n\n                  3.KEMBALI KE MENU");
-        printf("\n\n\tPILIHAN : "); scanf("%d",&input);
-        switch (input) {
-        case 1:
-                if(tmp2 == rek1)
-                {
-                  saldo = saldo - tmp;
-                  saldo1 = saldo1 + tmp;
-                }
-                if(tmp2 == rek2)
-                {
-                  saldo = saldo - tmp;
-                  saldo2 = saldo2 + tmp;
-                }
-                break;
-        case 2:
-                keluar();
-                break;
-default:
-menu();
-                break;
-        }
-        printf("                            TRANSAKSI BERHASIL!");
-        cekSaldo();
-}
+import random
+import datetime
+from customer import Customer
+atm = Customer(id)
+
+while True:
+id = int(input("Masukkan pin anda: "))
+trial = 0
+
+while (id != int(atm.checkPin()) and trial < 3):
+id = int(input("Pin anda salah. Silakan
+Masukkan lagi: "))
+trial += 1
+
+if trial == 3:
+print("Error. Silakan ambil kartu dan coba
+lagi..")
+exit()
+
+while True:
+print("Selamat datang di ATM Progate..")
+print("\n1 - Cek Saldo \t 2 - Debet \t 3 -
+Simpan \t 4 - Ganti Pin \t 5 - Keluar ")
+
+selectmenu = int(input("\nSilakan pilih menu: "))
+
+if selectmenu == 1:
+elif selectmenu == 2:
+elif selectmenu == 3:
+elif selectmenu == 4:
+elif selectmenu == 5:
+else:
+
+if selectmenu == 1:
+print("\nSaldo anda sekarang: Rp. " +
+str(atm.checkBalance()) + "\n" )   
+
+elif selectmenu == 2:
+nominal = float(input("Masukkan nominal saldo: "))
+verify_withdraw = input("Konfirmasi: Anda akan melakukan debet dengan nominal
+berikut ? y/n " + str(nominal) + " ")
+if verify_withdraw == "y":
+print("Saldo awal anda adalah: Rp. " + str(atm.checkBalance()) + "")
+else:
+break
+if nominal < atm.checkBalance():
+atm.withdrawBalance(nominal)
+print("Transaksi debet berhasil!")
+print("Saldo sisa sekarang: Rp. " + str(atm.checkBalance()) + "")
+else:
+print("Maaf. Saldo anda tidak cukup untuk melakukan debet!")
+print("Silakan lakukan penambahan nominal saldo")
+
+elif selectmenu == 3:
+nominal = float(input("Masukkan nominal saldo: "))
+verify_deposit = input("Konfirmasi: Anda akan melakukan
+penyimpanan dengan nominal berikut ? y/n " + str(nominal) + " ")
+if verify_deposit == "y":
+atm.depositBalance(nominal)
+print("Saldo anda sekarang adalah: Rp." +
+str(atm.checkBalance()) + "\n" )
+else:
+break
+
+elif selectmenu == 4:
+verify_pin = int(input("masukkan pin anda: "))
+while verify_pin != int(atm.checkPin()):
+print("pin anda salah, silakan masukkan pin: ")
+updated_pin = int(input("silakan masukkan pin baru: "))
+print("pin anda berhasil diganti!")
+verify_newpin = int(input("coba masukkan pin baru: "))
+if verify_newpin == updated_pin:
+print("pin baru anda sukses!")
+else:
+print("maaf, pin anda salah! ")
+
+elif selectmenu == 5:
+print("Resi tercetak otomatis saat anda keluar. \n Harap
+simpan tanda terima ini \n sebagai bukti transaksi anda.")
+print("No. Rekord: ", random.randint(100000, 1000000))
+print("Tanggal: ", datetime.datetime.now())
+print("Saldo akhir: ", atm.checkBalance())
+print("Terima kasih telah menggunakan ATM Progate!")
+exit()
+
+else:
+print("Error. Maaf, menu tidak tersedia")
+
+
